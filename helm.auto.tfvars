@@ -4,7 +4,7 @@
 # appd_account_username = "" # Set in Workspace Variables
 # appd_account_password = ""  # Set in Workspace Variables
 
-teastore_chart_url = "https://github.com/cisco-apjc-cloud-se/helm-fso-teastore/blob/main/fso-teastore-0.1.0.tgz"
+teastore_chart_url = "https://cisco-apjc-cloud-se.github.io/helm-fso-teastore/fso-teastore-0.1.0.tgz"
 
 ### Intersight Workload Optimizer Details ###
 iwo_cluster_name = "iks-fso-teastore"
