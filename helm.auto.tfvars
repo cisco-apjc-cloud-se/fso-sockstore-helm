@@ -1,14 +1,13 @@
 ### Bookinfo/AppD Agent Details ###
 # appd_account_name = "" # Set in Workspace Variables
 # appd_account_key = ""  # Set in Workspace Variables
-detailsService_replica_count = 2
-ratingsService_replica_count = 2
-reviewsService_replica_count = 2
-productPageService_replica_count = 2
-# bookinfo_chart_url = "" # Set in Workspace Variables
+# appd_account_username = "" # Set in Workspace Variables
+# appd_account_password = ""  # Set in Workspace Variables
+
+teastore_chart_url = "https://github.com/cisco-apjc-cloud-se/helm-fso-teastore/blob/main/fso-teastore-0.1.0.tgz"
 
 ### Intersight Workload Optimizer Details ###
-iwo_cluster_name = "iks-fso-sockstore"
+iwo_cluster_name = "iks-fso-teastore"
 # iwo_chart_url = "" # Set in Workspace Variables
 iwo_server_version = "8.3"
 iwo_collector_image_version = "8.3.1"

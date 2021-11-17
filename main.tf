@@ -3,7 +3,7 @@ terraform {
     hostname = "app.terraform.io"
     organization = "mel-ciscolabs-com"
     workspaces {
-      name = "fso-sockstore-helm"
+      name = "fso-teastore-helm"
     }
   }
   required_providers {
@@ -28,7 +28,7 @@ data "terraform_remote_state" "iks" {
   config = {
     organization = "mel-ciscolabs-com"
     workspaces = {
-      name = "fso-sockstore-iks"
+      name = "fso-teastore-iks"
     }
   }
 }
@@ -74,15 +74,15 @@ resource "kubernetes_namespace" "iwo-collector" {
   }
 }
 
-resource "kubernetes_namespace" "sockstore" {
+resource "kubernetes_namespace" "teastore" {
   metadata {
     annotations = {
-      name = "sockstore"
+      name = "teastore"
     }
     labels = {
-      app = "sockstore"
+      app = "teastore"
     }
-    name = "sockstore"
+    name = "teastore"
   }
 }
 
@@ -123,44 +123,14 @@ resource "helm_release" "iwo-collector" {
  }
 }
 
-// ## Add Bookinfo Release  ##
-// resource "helm_release" "bookinfo" {
-//  namespace   = kubernetes_namespace.bookinfo.metadata[0].name
-//  name        = "bookinfo"
-//
-//  chart       = var.bookinfo_chart_url
-//
-//  set {
-//    name  = "appDynamics.account_name"
-//    value = var.appd_account_name
-//  }
-//
-//  set {
-//    name  = "appDynamics.account_key"
-//    value = var.appd_account_key
-//  }
-//
-//  set {
-//    name  = "detailsService.replicaCount"
-//    value = var.detailsService_replica_count
-//  }
-//
-//  set {
-//    name  = "ratingsService.replicaCount"
-//    value = var.ratingsService_replica_count
-//  }
-//
-//  set {
-//    name  = "reviewsService.replicaCount"
-//    value = var.reviewsService_replica_count
-//  }
-//
-//  set {
-//    name  = "productPageService.replicaCount"
-//    value = var.productPageService_replica_count
-//  }
-//
-// }
+## Add Tea Store Release  ##
+resource "helm_release" "teastore" {
+ namespace   = kubernetes_namespace.teastore.metadata[0].name
+ name        = "teastore"
+
+ chart       = var.teastore_chart_url
+
+}
 
 ## Add Metrics Server Release ##
 # - Required for AppD Cluster Agent
@@ -209,6 +179,16 @@ resource "helm_release" "appd-cluster-agent" {
  set {
    name = "controllerInfo.accessKey"
    value = var.appd_account_key
+ }
+
+ set {
+   name = "controllerInfo.username"
+   value = var.appd_account_username
+ }
+
+ set {
+   name = "controllerInfo.password"
+   value = var.appd_account_password
  }
 
  ## Monitor All Namespaces

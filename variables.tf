@@ -1,4 +1,4 @@
-## Bookinfo/AppD Variables ##
+## AppD Variables ##
 variable "appd_account_name" {
   type = string
 }
@@ -7,24 +7,17 @@ variable "appd_account_key" {
   type = string
 }
 
-variable "bookinfo_chart_url" {
+variable "appd_account_username" {
   type = string
 }
 
-variable "detailsService_replica_count" {
-  type = number
+variable "appd_account_password" {
+  type = string
 }
 
-variable "ratingsService_replica_count" {
-  type = number
-}
-
-variable "reviewsService_replica_count" {
-  type = number
-}
-
-variable "productPageService_replica_count" {
-  type = number
+## Tea Store Variables ##
+variable "teastore_chart_url" {
+  type = string
 }
 
 ## IWO Collector Variables ##
