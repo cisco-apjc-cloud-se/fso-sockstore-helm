@@ -198,10 +198,43 @@ resource "helm_release" "appd-cluster-agent" {
  }
 
  ## Auto Instrumentation
- set {
-   name = "instrumentationConfig.enabled"
-   value = true
- }
+
+ // set {
+ //   name = "instrumentationConfig.enabled"
+ //   value = true
+ // }
+
+ values = [<<EOF
+instrumentationConfig:
+  enabled: true
+  instrumentationMethod: Env
+  nsToInstrumentRegex: teastore
+  defaultAppName: teastore
+  appNameStrategy: namespace
+  imageInfo:
+    java:
+      image: "docker.io/appdynamics/java-agent:latest"
+      agentMountPath: /opt/appdynamics
+      imagePullPolicy: Always
+  // instrumentationRules:
+  //   - namespaceRegex: groceries
+  //     language: dotnetcore
+  //     imageInfo:
+  //       image: "docker.io/appdynamics/dotnet-core-agent:latest"
+  //       agentMountPath: /opt/appdynamics
+  //       imagePullPolicy: Always
+  //   - namespaceRegex: books
+  //     matchString: openmct
+  //     language: nodejs
+  //     imageInfo:
+  //       image: "docker.io/appdynamics/nodejs-agent:20.5.0-alpinev10"
+  //       agentMountPath: /opt/appdynamics
+  //       imagePullPolicy: Always
+  //     analyticsHost: <hostname of the Analytics Agent>
+  //     analyticsPort: 443
+  //     analyticsSslEnabled: true
+EOF
+]
 
  depends_on = [helm_release.metrics-server]
 }
