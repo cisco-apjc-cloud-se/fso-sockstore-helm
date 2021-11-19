@@ -197,6 +197,12 @@ resource "helm_release" "appd-cluster-agent" {
    value = ".*"
  }
 
+ ## Auto Instrumentation
+ set {
+   name = "instrumentationConfig.enabled"
+   value = true
+ }
+
  depends_on = [helm_release.metrics-server]
 }
 
