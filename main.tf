@@ -211,8 +211,8 @@ instrumentationMethod: Env
 nsToInstrumentRegex: teastore
 defaultAppName: teastore-richwats
 instrumentationRules:
-- language: java
-  labelMatch:
+// - language: java
+- labelMatch:
     - framework: java
   imageInfo:
     image: docker.io/appdynamics/java-agent:latest
