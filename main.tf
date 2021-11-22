@@ -204,9 +204,9 @@ resource "helm_release" "appd-cluster-agent" {
  //   name = "instrumentationConfig.enabled"
  //   value = true
  // }
-
- values = [<<EOF
+ 
 # auto-instrumentation config
+ values = [<<EOF
 instrumentationMethod: Env
 nsToInstrumentRegex: teastore
 defaultAppName: teastore-richwats
