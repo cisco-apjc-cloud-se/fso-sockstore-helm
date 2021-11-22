@@ -199,17 +199,45 @@ resource "helm_release" "appd-cluster-agent" {
  }
 
  ## Auto Instrumentation
+
+ // set {
+ //   name = "instrumentationConfig.enabled"
+ //   value = true
+ // }
+
  values = [<<EOF
- instrumentationMethod: Env
- nsToInstrumentRegex: teastore
- defaultAppName: teastore-richwats
- instrumentationRules:
-   - language: java
-     imageInfo:
-       image: docker.io/appdynamics/java-agent:latest
-       agentMountPath: /opt/appdynamics
+instrumentationConfig:
+  enabled: true
+  instrumentationMethod: Env
+  nsToInstrumentRegex: teastore
+  defaultAppName: teastore-richwats
+  appNameStrategy: namespace
+  // imageInfo:
+  //   java:
+  //     image: "docker.io/appdynamics/java-agent:latest"
+  //     agentMountPath: /opt/appdynamics
+  //     imagePullPolicy: Always
+  instrumentationRules:
+    - language: java
+      imageInfo:
+        image: docker.io/appdynamics/java-agent:latest
+        agentMountPath: /opt/appdynamics
+        imagePullPolicy: Always
 EOF
 ]
+
+// ## Auto Instrumentation
+// values = [<<EOF
+// instrumentationMethod: Env
+// nsToInstrumentRegex: teastore
+// defaultAppName: teastore-richwats
+// instrumentationRules:
+//   - language: java
+//     imageInfo:
+//       image: docker.io/appdynamics/java-agent:latest
+//       agentMountPath: /opt/appdynamics
+// EOF
+// ]
 
 // instrumentationConfig:
 //   enabled: true
