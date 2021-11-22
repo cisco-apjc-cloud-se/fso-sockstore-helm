@@ -212,10 +212,12 @@ nsToInstrumentRegex: teastore
 defaultAppName: teastore-richwats
 instrumentationRules:
 - language: java
- imageInfo:
-     image: docker.io/appdynamics/java-agent:latest
-     agentMountPath: /opt/appdynamics
-     imagePullPolicy: Always
+  labelMatch:
+    - framework: java
+  imageInfo:
+    image: docker.io/appdynamics/java-agent:latest
+    agentMountPath: /opt/appdynamics
+    imagePullPolicy: Always
 EOF
 ]
 
