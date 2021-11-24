@@ -62,6 +62,18 @@ provider "helm" {
 
 ### Add Namespaces ###
 
+resource "kubernetes_namespace" "sca" {
+  metadata {
+    annotations = {
+      name = "sca"
+    }
+    labels = {
+      app = "sca"
+    }
+    name = "sca"
+  }
+}
+
 resource "kubernetes_namespace" "iwo-collector" {
   metadata {
     annotations = {
@@ -99,6 +111,19 @@ resource "kubernetes_namespace" "appd" {
 }
 
 ### Helm ###
+
+## Add Secure Cloud Analytics - K8S Agent Release ##
+resource "helm_release" "sca" {
+ namespace   = kubernetes_namespace.sca.metadata[0].name
+ name        = "sca"
+
+ chart       = var.sca_chart_url
+
+ set {
+   name  = "sca.secret_key"
+   value = var.sca_secret_key
+ }
+}
 
 ## Add IWO K8S Collector Release ##
 resource "helm_release" "iwo-collector" {

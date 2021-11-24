@@ -36,3 +36,12 @@ variable "iwo_server_version" {
 variable "iwo_collector_image_version" {
   type = string
 }
+
+## Secure Cloud Analytics ##
+variable "sca_chart_url" {
+  type = string
+}
+
+variable "sca_secret_key" {
+  type = string
+}
