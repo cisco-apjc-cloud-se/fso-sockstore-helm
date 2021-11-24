@@ -130,6 +130,93 @@ resource "helm_release" "teastore" {
 
  chart       = var.teastore_chart_url
 
+ values = [<<EOF
+teastore_auth:
+ replicas: 1
+ resources:
+   memory: "256M"
+   cpu: "500m"
+ service:
+   type: ClusterIP # ClusterIP, NodePort, LoadBalancer
+   targetPort: 8080
+   port: 8080 ## External Port for LoadBalancer/NodePort
+   teastore_db:
+     replicas: 1
+     resources:
+       memory: "256M"
+       cpu: "500m"
+     service:
+       type: ClusterIP # ClusterIP, NodePort, LoadBalancer
+       targetPort: 3306
+       port: 3306 ## External Port for LoadBalancer/NodePort
+teastore_image:
+ replicas: 1
+ resources:
+   memory: "256M"
+   cpu: "500m"
+ service:
+   type: ClusterIP # ClusterIP, NodePort, LoadBalancer
+   targetPort: 8080
+   port: 8080 ## External Port for LoadBalancer/NodePort
+teastore_loadgen:
+ replicas: 1
+ resources:
+   memory: "256M"
+   cpu: "500m"
+ settings:
+   num_users: 10
+   ramp_up: 1
+teastore_loadgen_amex:
+ replicas: 1
+ resources:
+   memory: "256M"
+   cpu: "500m"
+ settings:
+   num_users: 10
+   ramp_up: 1
+teastore_persistence:
+ replicas: 1
+ resources:
+   memory: "256M"
+   cpu: "500m"
+ service:
+   type: ClusterIP # ClusterIP, NodePort, LoadBalancer
+   targetPort: 8080
+   port: 8080 ## External Port for LoadBalancer/NodePort
+teastore_recommender:
+ replicas: 2
+ resources:
+   memory: "256M"
+   cpu: "500m"
+ service:
+   type: ClusterIP # ClusterIP, NodePort, LoadBalancer
+   targetPort: 8080
+   port: 8080 ## External Port for LoadBalancer/NodePort
+teastore_registry:
+ replicas: 1
+ resources:
+   memory: "256M"
+   cpu: "500m"
+ service:
+   type: ClusterIP # ClusterIP, NodePort, LoadBalancer
+   targetPort: 8080
+   port: 8080 ## External Port for LoadBalancer/NodePort
+teastore_webui:
+ replicas: 3
+ resources:
+   memory: "256M"
+   cpu: "500m"
+ service:
+   type: LoadBalancer # ClusterIP, NodePort, LoadBalancer
+   targetPort: 8080
+   port: 8080 ## External Port for LoadBalancer/NodePort
+ env:
+   visa_url: "https://fso-payment-gw-sim.azurewebsites.net/api/payment"
+   mastercard_url: "https://fso-payment-gw-sim.azurewebsites.net/api/payment"
+   amex_url: "https://amex-fso-payment-gw-sim.azurewebsites.net/api/payment"
+EOF
+]
+
  depends_on = [helm_release.appd-cluster-agent]
 }
 
@@ -337,14 +424,16 @@ resource "helm_release" "appd-machine-agent" {
  depends_on = [helm_release.metrics-server]
 }
 
-## Add Prometheus (Kube-state-metrics, node-exporter, alertmanager)  ##
-resource "helm_release" "prometheus" {
- namespace   = "kube-system"
- name        = "prometheus"
+# Prometheus included as part of SMM..
 
- repository  = "https://prometheus-community.github.io/helm-charts"
- chart       = "prometheus"
-
- ## Delay Chart Deployment
- depends_on = [helm_release.metrics-server]
-}
+# ## Add Prometheus (Kube-state-metrics, node-exporter, alertmanager)  ##
+# resource "helm_release" "prometheus" {
+#  namespace   = "kube-system"
+#  name        = "prometheus"
+#
+#  repository  = "https://prometheus-community.github.io/helm-charts"
+#  chart       = "prometheus"
+#
+#  ## Delay Chart Deployment
+#  depends_on = [helm_release.metrics-server]
+# }
