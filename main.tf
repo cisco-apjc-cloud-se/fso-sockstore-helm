@@ -120,8 +120,8 @@ resource "helm_release" "sca" {
  chart       = var.sca_chart_url
 
  set {
-   name  = "sca.secret_key"
-   value = var.sca_secret_key
+   name  = "sca.service_key"
+   value = var.sca_service_key
  }
 }
 

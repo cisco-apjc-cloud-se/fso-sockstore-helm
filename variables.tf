@@ -42,6 +42,6 @@ variable "sca_chart_url" {
   type = string
 }
 
-variable "sca_secret_key" {
+variable "sca_service_key" {
   type = string
 }
