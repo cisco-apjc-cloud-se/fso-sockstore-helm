@@ -93,6 +93,8 @@ resource "kubernetes_namespace" "teastore" {
     }
     labels = {
       app = "teastore"
+      ## Istio Sidecard Injection ##
+      istio-injection="enabled"
     }
     name = "teastore"
   }
