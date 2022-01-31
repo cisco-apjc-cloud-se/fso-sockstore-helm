@@ -278,7 +278,7 @@ resource "helm_release" "metrics-server" {
 ## Add Appd Cluster Agent Release  ##
 resource "helm_release" "appd-cluster-agent" {
  namespace   = kubernetes_namespace.appd.metadata[0].name
- name        = "fso-sockstore-cluster-agent"
+ name        = "fso-teastore-cluster-agent"
 
  repository  = "https://ciscodevnet.github.io/appdynamics-charts"
  chart       = "cluster-agent"
@@ -391,7 +391,7 @@ EOF
 ## Add Appd Machine Agent Release  ##
 resource "helm_release" "appd-machine-agent" {
  namespace   = kubernetes_namespace.appd.metadata[0].name
- name        = "fso-sockstore-machine-agent"
+ name        = "fso-teastore-machine-agent"
 
  repository  = "https://ciscodevnet.github.io/appdynamics-charts"
  chart       = "machine-agent"
