@@ -94,8 +94,8 @@ resource "kubernetes_namespace" "teastore" {
     labels = {
       app = "teastore"
 
-      ## Istio Sidecard Injection ##
-      istio-injection="enabled"
+      ## SMM Sidecard Proxy Auto Injection ##
+      "istio.io/rev" = "cp-v111x.istio-system"
 
     }
     name = "teastore"
