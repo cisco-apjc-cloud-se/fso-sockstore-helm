@@ -173,7 +173,7 @@ teastore_auth:
      replicas: 1
      resources:
        memory: "256M"
-       cpu: "500m"
+       cpu: "600m"
      service:
        type: ClusterIP # ClusterIP, NodePort, LoadBalancer
        targetPort: 3306
