@@ -164,25 +164,25 @@ teastore_auth:
  replicas: 1
  resources:
    memory: "256M"
-   cpu: "600m"
+   cpu: "800m"
  service:
    type: ClusterIP # ClusterIP, NodePort, LoadBalancer
    targetPort: 8080
    port: 8080 ## External Port for LoadBalancer/NodePort
-   teastore_db:
-     replicas: 1
-     resources:
-       memory: "256M"
-       cpu: "600m"
-     service:
-       type: ClusterIP # ClusterIP, NodePort, LoadBalancer
-       targetPort: 3306
-       port: 3306 ## External Port for LoadBalancer/NodePort
+teastore_db:
+ replicas: 1
+ resources:
+   memory: "256M"
+   cpu: "800m"
+ service:
+   type: ClusterIP # ClusterIP, NodePort, LoadBalancer
+   targetPort: 3306
+   port: 3306 ## External Port for LoadBalancer/NodePort
 teastore_image:
   replicas: 1
   resources:
     memory: "256M"
-    cpu: "600m"
+    cpu: "800m"
   service:
     type: ClusterIP # ClusterIP, NodePort, LoadBalancer
     targetPort: 8080
@@ -191,7 +191,7 @@ teastore_loadgen:
   replicas: 1
   resources:
     memory: "256M"
-    cpu: "600m"
+    cpu: "800m"
   settings:
     num_users: 10
     ramp_up: 1
@@ -199,7 +199,7 @@ teastore_loadgen_amex:
   replicas: 1
   resources:
     memory: "256M"
-    cpu: "300m"
+    cpu: "800m"
   settings:
     num_users: 10
     ramp_up: 1
@@ -207,7 +207,7 @@ teastore_persistence:
   replicas: 1
   resources:
     memory: "256M"
-    cpu: "600m"
+    cpu: "800m"
   service:
     type: ClusterIP # ClusterIP, NodePort, LoadBalancer
     targetPort: 8080
@@ -216,7 +216,7 @@ teastore_recommender:
   replicas: 2
   resources:
     memory: "256M"
-    cpu: "600m"
+    cpu: "800m"
   service:
     type: ClusterIP # ClusterIP, NodePort, LoadBalancer
     targetPort: 8080
@@ -225,7 +225,7 @@ teastore_registry:
   replicas: 1
   resources:
     memory: "256M"
-    cpu: "600m"
+    cpu: "800m"
   service:
     type: ClusterIP # ClusterIP, NodePort, LoadBalancer
     targetPort: 8080
@@ -234,7 +234,7 @@ teastore_webui:
   replicas: 2
   resources:
     memory: "256M"
-    cpu: "600m"
+    cpu: "800m"
   service:
     type: LoadBalancer # ClusterIP, NodePort, LoadBalancer
     targetPort: 8080
