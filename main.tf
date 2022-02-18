@@ -68,7 +68,8 @@ resource "kubernetes_namespace" "sca" {
       name = "sca"
     }
     labels = {
-      app = "sca"
+      # app = "sca"
+      "app.kubernetes.io/name" = "sca"
     }
     name = "sca"
   }
@@ -80,7 +81,8 @@ resource "kubernetes_namespace" "iwo-collector" {
       name = "iwo-collector"
     }
     labels = {
-      app = "iwo"
+      # app = "iwo"
+      "app.kubernetes.io/name" = "iwo"
     }
     name = "iwo-collector"
   }
@@ -92,7 +94,8 @@ resource "kubernetes_namespace" "teastore" {
       name = "teastore"
     }
     labels = {
-      app = "teastore"
+      "app.kubernetes.io/name" = "teastore"
+      "app.kubernetes.io/version" = "0.3.0"
 
       ## SMM Sidecard Proxy Auto Injection ##
       "istio.io/rev" = "cp-v111x.istio-system"
@@ -108,7 +111,8 @@ resource "kubernetes_namespace" "appd" {
       name = "appdynamics"
     }
     labels = {
-      app = "appdynamics"
+      # app = "appdynamics"
+      "app.kubernetes.io/name" = "appdynamics"
     }
     name = "appdynamics"
   }
