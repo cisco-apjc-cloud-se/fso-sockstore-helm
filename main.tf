@@ -217,7 +217,7 @@ teastore_persistence:
     targetPort: 8080
     port: 8080 ## External Port for LoadBalancer/NodePort
 teastore_recommender:
-  replicas: 2
+  replicas: 1
   resources:
     memory: "256M"
     cpu: "800m"
