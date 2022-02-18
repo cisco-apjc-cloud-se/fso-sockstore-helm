@@ -95,7 +95,7 @@ resource "kubernetes_namespace" "teastore" {
     }
     labels = {
       "app.kubernetes.io/name" = "teastore"
-      "app.kubernetes.io/version" = "0.3.0"
+      "app.kubernetes.io/version" = "0.4.0"
 
       ## SMM Sidecard Proxy Auto Injection ##
       "istio.io/rev" = "cp-v111x.istio-system"
