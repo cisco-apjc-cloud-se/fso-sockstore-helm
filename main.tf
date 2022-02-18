@@ -157,9 +157,9 @@ resource "helm_release" "iwo-collector" {
 }
 
 ## Add Tea Store Release  ##
-resource "helm_release" "teastore" {
+resource "helm_release" "fso-teastore" {
  namespace   = kubernetes_namespace.teastore.metadata[0].name
- name        = "teastore"
+ name        = "fso-teastore"
 
  chart       = var.teastore_chart_url
 
