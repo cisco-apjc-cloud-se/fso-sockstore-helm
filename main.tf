@@ -282,7 +282,7 @@ teastore_webui:
    memory: "256M"
    cpu: "500m"
  service:
-   type: ClusterIP # ClusterIP, NodePort, LoadBalancer
+   type: LoadBalancer # ClusterIP, NodePort, LoadBalancer
    targetPort: 8080
    port: 8080 ## External Port for LoadBalancer/NodePort
  env:
