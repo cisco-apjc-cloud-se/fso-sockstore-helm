@@ -164,89 +164,131 @@ resource "helm_release" "fso-teastore" {
  chart       = var.teastore_chart_url
 
  values = [<<EOF
+OrderProcessor: false
+Log4ShellDemo: false
+
 teastore_auth:
  replicas: 1
  resources:
    memory: "256M"
-   cpu: "800m"
+   cpu: "500m"
  service:
    type: ClusterIP # ClusterIP, NodePort, LoadBalancer
    targetPort: 8080
    port: 8080 ## External Port for LoadBalancer/NodePort
+
 teastore_db:
  replicas: 1
  resources:
    memory: "256M"
-   cpu: "800m"
+   cpu: "500m"
  service:
    type: ClusterIP # ClusterIP, NodePort, LoadBalancer
    targetPort: 3306
    port: 3306 ## External Port for LoadBalancer/NodePort
+
 teastore_image:
-  replicas: 1
-  resources:
-    memory: "256M"
-    cpu: "800m"
-  service:
-    type: ClusterIP # ClusterIP, NodePort, LoadBalancer
-    targetPort: 8080
-    port: 8080 ## External Port for LoadBalancer/NodePort
+ replicas: 1
+ resources:
+   memory: "256M"
+   cpu: "500m"
+ service:
+   type: ClusterIP # ClusterIP, NodePort, LoadBalancer
+   targetPort: 8080
+   port: 8080 ## External Port for LoadBalancer/NodePort
+
 teastore_loadgen:
-  replicas: 0 ## Off by default
-  resources:
-    memory: "256M"
-    cpu: "800m"
-  settings:
-    num_users: 10
-    ramp_up: 1
+ replicas: 0 # Off by default
+ resources:
+   memory: "256M"
+   cpu: "500m"
+ settings:
+   num_users: 10
+   ramp_up: 1
+
 teastore_loadgen_amex:
-  replicas: 0 ## Off by default
-  resources:
-    memory: "256M"
-    cpu: "800m"
-  settings:
-    num_users: 10
-    ramp_up: 1
+ replicas: 0 # Off by default
+ resources:
+   memory: "256M"
+   cpu: "500m"
+ settings:
+   num_users: 10
+   ramp_up: 1
+
 teastore_persistence:
-  replicas: 1
-  resources:
-    memory: "256M"
-    cpu: "800m"
-  service:
-    type: ClusterIP # ClusterIP, NodePort, LoadBalancer
-    targetPort: 8080
-    port: 8080 ## External Port for LoadBalancer/NodePort
+ replicas: 1
+ resources:
+   memory: "256M"
+   cpu: "500m"
+ service:
+   type: ClusterIP # ClusterIP, NodePort, LoadBalancer
+   targetPort: 8080
+   port: 8080 ## External Port for LoadBalancer/NodePort
+
+### Used for Memory Leak Detection in AppD ###
+teastore_ldap:
+ replicas: 0
+ resources:
+   memory: "256M"
+   cpu: "500m"
+ service:
+   type: ClusterIP # ClusterIP, NodePort, LoadBalancer
+   revshell:
+     port: 8888
+     targetPort: 8888 ## External Port for LoadBalancer/NodePort
+   ldap:
+     port: 1389
+     targetPort: 1389 ## External Port for LoadBalancer/NodePort
+
+### Used for Memory Leak Detection in AppD ###
+teastore_orderprocessor:
+ replicas: 0
+ resources:
+   memory: "256M"
+   cpu: "500m"
+ settings:
+   mem_increment_mb: 1
+   processing_rate_seconds: 15
+   max_jvm_heap: "512m"
+
 teastore_recommender:
-  replicas: 1
-  resources:
-    memory: "256M"
-    cpu: "800m"
-  service:
-    type: ClusterIP # ClusterIP, NodePort, LoadBalancer
-    targetPort: 8080
-    port: 8080 ## External Port for LoadBalancer/NodePort
+ replicas: 1
+ resources:
+   memory: "256M"
+   cpu: "500m"
+ service:
+   type: ClusterIP # ClusterIP, NodePort, LoadBalancer
+   targetPort: 8080
+   port: 8080 ## External Port for LoadBalancer/NodePort
+
 teastore_registry:
-  replicas: 1
-  resources:
-    memory: "256M"
-    cpu: "800m"
-  service:
-    type: ClusterIP # ClusterIP, NodePort, LoadBalancer
-    targetPort: 8080
-    port: 8080 ## External Port for LoadBalancer/NodePort
+ replicas: 1
+ resources:
+   memory: "256M"
+   cpu: "500m"
+ service:
+   type: ClusterIP # ClusterIP, NodePort, LoadBalancer
+   targetPort: 8080
+   port: 8080 ## External Port for LoadBalancer/NodePort
+
 teastore_webui:
-  replicas: 2
-  resources:
-    memory: "256M"
-    cpu: "800m"
-  service:
-    type: LoadBalancer # ClusterIP, NodePort, LoadBalancer
-    targetPort: 8080
-    port: 8080 ## External Port for LoadBalancer/NodePort
-  env:
-    visa_url: "https://fso-payment-gw-sim.azurewebsites.net/api/payment"
-    mastercard_url: "https://fso-payment-gw-sim.azurewebsites.net/api/payment"
-    amex_url: "https://amex-fso-payment-gw-sim.azurewebsites.net/api/payment"
+ v1:
+   replicas: 1
+ v2:
+   replicas: 1
+ v3:
+   replicas: 0
+ resources:
+   memory: "256M"
+   cpu: "500m"
+ service:
+   type: ClusterIP # ClusterIP, NodePort, LoadBalancer
+   targetPort: 8080
+   port: 8080 ## External Port for LoadBalancer/NodePort
+ env:
+   visa_url: "https://fso-payment-gw-sim.azurewebsites.net/api/payment"
+   mastercard_url: "https://fso-payment-gw-sim.azurewebsites.net/api/payment"
+   amex_url: "https://amex-fso-payment-gw-sim.azurewebsites.net/api/payment"
 EOF
 ]
 
