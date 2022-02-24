@@ -192,7 +192,7 @@ teastore_image:
     targetPort: 8080
     port: 8080 ## External Port for LoadBalancer/NodePort
 teastore_loadgen:
-  replicas: 1
+  replicas: 0 ## Off by default
   resources:
     memory: "256M"
     cpu: "800m"
@@ -200,7 +200,7 @@ teastore_loadgen:
     num_users: 10
     ramp_up: 1
 teastore_loadgen_amex:
-  replicas: 1
+  replicas: 0 ## Off by default
   resources:
     memory: "256M"
     cpu: "800m"
