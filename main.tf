@@ -341,12 +341,12 @@ resource "helm_release" "appd-cluster-agent" {
  }
 
  set {
-   name = "agentPod.resources.limits.requests"
+   name = "agentPod.resources.requests.cpu"
    value = "350m" # "750m" lowered by IWO
  }
 
  set {
-   name = "agentPod.resources.limits.requests"
+   name = "agentPod.resources.requests.memory"
    value = "150Mi"
  }
 
