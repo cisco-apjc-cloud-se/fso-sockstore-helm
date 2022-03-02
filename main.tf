@@ -474,7 +474,28 @@ resource "helm_release" "appd-machine-agent" {
  // --set analytics.eventEndpoint=https://analytics.api.appdynamics.com \
  // --set agent.netviz=true serverviz appdynamics-charts/machine-agent
 
- ### Agent Pod CPU/RAM Requests/Limits ###
+ ### Machine Agent CPU/RAM Requests/Limits ###
+ set {
+   name = "daemonset.resources.limits.cpu"
+   value = "2.5" # "600m"  Scaled up from IWO
+ }
+
+ set {
+   name = "daemonset.resources.limits.memory"
+   value = "2G"
+ }
+
+ set {
+   name = "daemonset.resources.requests.cpu"
+   value = "300m"
+ }
+
+ set {
+   name = "daemonset.resources.requests.memory"
+   value = "1G"
+ }
+
+ ### NetViz Agent CPU/RAM Requests/Limits ###
  set {
    name = "daemonset.netvizResources.limits.cpu"
    value = "400m" # "200m" scaled up from IWO
