@@ -265,7 +265,7 @@ teastore_registry:
  replicas: 1
  resources:
    memory: "256M"
-   cpu: "100m"  ## "500m" lowered by IWO 
+   cpu: "100m"  ## "500m" lowered by IWO
  service:
    type: ClusterIP # ClusterIP, NodePort, LoadBalancer
    targetPort: 8080
@@ -474,6 +474,28 @@ resource "helm_release" "appd-machine-agent" {
  // --set analytics.eventEndpoint=https://analytics.api.appdynamics.com \
  // --set agent.netviz=true serverviz appdynamics-charts/machine-agent
 
+ ### Agent Pod CPU/RAM Requests/Limits ###
+ set {
+   name = "daemonset.netvizResources.limits.cpu"
+   value = "400m" # "200m" scaled up from IWO
+ }
+
+ set {
+   name = "daemonset.netvizResources.limits.memory"
+   value = "384Mi "# "300Mi" scaled up from IWO
+ }
+
+ set {
+   name = "daemonset.netvizResources.requests.cpu"
+   value = "100m"
+ }
+
+ set {
+   name = "daemonset.netvizResources.requests.memory"
+   value = "150Mi"
+ }
+
+ ### Controller Details ###
  set {
    name = "controller.accessKey"
    value = var.appd_account_key
