@@ -265,7 +265,7 @@ teastore_registry:
  replicas: 1
  resources:
    memory: "256M"
-   cpu: "500m"
+   cpu: "100m"  ## "500m" lowered by IWO 
  service:
    type: ClusterIP # ClusterIP, NodePort, LoadBalancer
    targetPort: 8080
