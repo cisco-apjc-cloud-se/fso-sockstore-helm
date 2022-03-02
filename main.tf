@@ -329,6 +329,29 @@ resource "helm_release" "appd-cluster-agent" {
  repository  = "https://ciscodevnet.github.io/appdynamics-charts"
  chart       = "cluster-agent"
 
+ ### Agent Pod CPU/RAM Requests/Limits ###
+ set {
+   name = "agentPod.resources.limits.cpu"
+   value = "1250m"
+ }
+
+ set {
+   name = "agentPod.resources.limits.memory"
+   value = "428Mi" # "300Mi" raised by IWO
+ }
+
+ set {
+   name = "agentPod.resources.limits.requests"
+   value = "350m" # "750m" lowered by IWO
+ }
+
+ set {
+   name = "agentPod.resources.limits.requests"
+   value = "150Mi"
+ }
+
+ ### Controller Details ###
+
  set {
    name = "controllerInfo.url"
    value = format("https://%s.saas.appdynamics.com:443", var.appd_account_name)
