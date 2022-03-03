@@ -181,7 +181,7 @@ teastore_db:
  replicas: 1
  resources:
    memory: "256M"
-   cpu: "500m"
+   cpu: "200m" # "500m" scaled down by IWO
  service:
    type: ClusterIP # ClusterIP, NodePort, LoadBalancer
    targetPort: 3306
@@ -201,7 +201,7 @@ teastore_loadgen:
  replicas: 0 # Off by default
  resources:
    memory: "256M"
-   cpu: "500m"
+   cpu: "200m" # "500m" scaled down by IWO
  settings:
    num_users: 10
    ramp_up: 1
@@ -210,7 +210,7 @@ teastore_loadgen_amex:
  replicas: 0 # Off by default
  resources:
    memory: "256M"
-   cpu: "500m"
+   cpu: "200m" # "500m" scaled down by IWO
  settings:
    num_users: 10
    ramp_up: 1
@@ -255,7 +255,7 @@ teastore_recommender:
  replicas: 1
  resources:
    memory: "256M"
-   cpu: "500m"
+   cpu: "400m" # "500m" scaled down by IWO
  service:
    type: ClusterIP # ClusterIP, NodePort, LoadBalancer
    targetPort: 8080
