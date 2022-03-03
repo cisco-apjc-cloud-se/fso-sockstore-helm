@@ -329,6 +329,27 @@ resource "helm_release" "appd-cluster-agent" {
  repository  = "https://ciscodevnet.github.io/appdynamics-charts"
  chart       = "cluster-agent"
 
+ ### Set Image Tag Version to Latest ###
+ set {
+   name = "imageInfo.agentTag"
+   value = "latest"
+ }
+
+ set {
+   name = "imageInfo.machineAgentTag"
+   value = "latest"
+ }
+
+ set {
+   name = "imageInfo.netvizTag"
+   value = "latest"
+ }
+
+ set {
+   name = "imageInfo.operatorTag"
+   value = "latest"
+ }
+
  ### Agent Pod CPU/RAM Requests/Limits ###
  set {
    name = "agentPod.resources.limits.cpu"
@@ -348,6 +369,59 @@ resource "helm_release" "appd-cluster-agent" {
  set {
    name = "agentPod.resources.requests.memory"
    value = "150Mi"
+ }
+
+ ### Enable InfraViz ###
+ set {
+   name = "installInfraViz"
+   value = true
+ }
+
+ ### Enable NetViz ###
+ set {
+   name = "netViz.enabled"
+   value = false
+ }
+
+ ### Enable Docker Visibility ###
+ set {
+   name = "infraViz.enableDockerViz"
+   value = true
+ }
+
+ ### Enable Server Visibility ###
+ set {
+   name = "infraViz.enableServerViz"
+   value = true
+ }
+
+ # infraViz:
+ #   enableContainerHostId: false
+ #   enableDockerViz: false
+ #   enableMasters: false
+ #   enableServerViz: false
+ #   nodeOS: linux
+ #   stdoutLogging: false
+
+ ### Machine / Infra Viz Agent Pod Sizes ###
+ set {
+   name = "infravizPod.resources.limits.cpu"
+   value = "500m"
+ }
+
+ set {
+   name = "infravizPod.resources.limits.memory"
+   value = "1G"
+ }
+
+ set {
+   name = "infravizPod.resources.requests.cpu"
+   value = "200m"
+ }
+
+ set {
+   name = "infravizPod.resources.requests.memory"
+   value = "800m"
  }
 
  ### Controller Details ###
@@ -457,113 +531,113 @@ EOF
  depends_on = [helm_release.metrics-server]
 }
 
-## Add Appd Machine Agent Release  ##
-resource "helm_release" "appd-machine-agent" {
- namespace   = kubernetes_namespace.appd.metadata[0].name
- name        = "fso-teastore-machine-agent"
-
- repository  = "https://ciscodevnet.github.io/appdynamics-charts"
- chart       = "machine-agent"
-
- // helm install --namespace=appdynamics \
- // --set .accessKey=<controller-key> \
- // --set .host=<*.saas.appdynamics.com> \
- // --set controller.port=443 --set controller.ssl=true \
- // --set controller.accountName=<account-name> \
- // --set controller.globalAccountName=<global-account-name> \
- // --set analytics.eventEndpoint=https://analytics.api.appdynamics.com \
- // --set agent.netviz=true serverviz appdynamics-charts/machine-agent
-
- ### Machine Agent CPU/RAM Requests/Limits ###
- set {
-   name = "daemonset.resources.limits.cpu"
-   value = "2.5" # "600m"  Scaled up from IWO
- }
-
- set {
-   name = "daemonset.resources.limits.memory"
-   value = "2G"
- }
-
- set {
-   name = "daemonset.resources.requests.cpu"
-   value = "300m"
- }
-
- set {
-   name = "daemonset.resources.requests.memory"
-   value = "1G"
- }
-
- ### NetViz Agent CPU/RAM Requests/Limits ###
- set {
-   name = "daemonset.netvizResources.limits.cpu"
-   value = "400m" # "200m" scaled up from IWO
- }
-
- set {
-   name = "daemonset.netvizResources.limits.memory"
-   value = "384Mi "# "300Mi" scaled up from IWO
- }
-
- set {
-   name = "daemonset.netvizResources.requests.cpu"
-   value = "100m"
- }
-
- set {
-   name = "daemonset.netvizResources.requests.memory"
-   value = "150Mi"
- }
-
- ### Controller Details ###
- set {
-   name = "controller.accessKey"
-   value = var.appd_account_key
- }
-
- set {
-   name = "controller.host"
-   value = format("%s.saas.appdynamics.com", var.appd_account_name)
- }
-
- set {
-   name = "controller.port"
-   value = 443
- }
-
- set {
-   name = "controller.ssl"
-   value = true
- }
-
- set {
-   name = "controller.accountName"
-   value = var.appd_account_name
- }
-
- set {
-   name = "controller.globalAccountName"
-   value = var.appd_account_name
- }
-
- set {
-   name = "analytics.eventEndpoint"
-   value = "https://analytics.api.appdynamics.com"
- }
-
- set {
-   name = "agent.netviz"
-   value = true
- }
-
- set {
-   name = "openshift.scc"
-   value = false
- }
-
- depends_on = [helm_release.metrics-server]
-}
+# ## Add Appd Machine Agent Release  ##
+# resource "helm_release" "appd-machine-agent" {
+#  namespace   = kubernetes_namespace.appd.metadata[0].name
+#  name        = "fso-teastore-machine-agent"
+#
+#  repository  = "https://ciscodevnet.github.io/appdynamics-charts"
+#  chart       = "machine-agent"
+#
+#  // helm install --namespace=appdynamics \
+#  // --set .accessKey=<controller-key> \
+#  // --set .host=<*.saas.appdynamics.com> \
+#  // --set controller.port=443 --set controller.ssl=true \
+#  // --set controller.accountName=<account-name> \
+#  // --set controller.globalAccountName=<global-account-name> \
+#  // --set analytics.eventEndpoint=https://analytics.api.appdynamics.com \
+#  // --set agent.netviz=true serverviz appdynamics-charts/machine-agent
+#
+#  ### Machine Agent CPU/RAM Requests/Limits ###
+#  set {
+#    name = "daemonset.resources.limits.cpu"
+#    value = "2.5" # "600m"  Scaled up from IWO
+#  }
+#
+#  set {
+#    name = "daemonset.resources.limits.memory"
+#    value = "2G"
+#  }
+#
+#  set {
+#    name = "daemonset.resources.requests.cpu"
+#    value = "300m"
+#  }
+#
+#  set {
+#    name = "daemonset.resources.requests.memory"
+#    value = "1G"
+#  }
+#
+#  ### NetViz Agent CPU/RAM Requests/Limits ###
+#  set {
+#    name = "daemonset.netvizResources.limits.cpu"
+#    value = "400m" # "200m" scaled up from IWO
+#  }
+#
+#  set {
+#    name = "daemonset.netvizResources.limits.memory"
+#    value = "384Mi "# "300Mi" scaled up from IWO
+#  }
+#
+#  set {
+#    name = "daemonset.netvizResources.requests.cpu"
+#    value = "100m"
+#  }
+#
+#  set {
+#    name = "daemonset.netvizResources.requests.memory"
+#    value = "150Mi"
+#  }
+#
+#  ### Controller Details ###
+#  set {
+#    name = "controller.accessKey"
+#    value = var.appd_account_key
+#  }
+#
+#  set {
+#    name = "controller.host"
+#    value = format("%s.saas.appdynamics.com", var.appd_account_name)
+#  }
+#
+#  set {
+#    name = "controller.port"
+#    value = 443
+#  }
+#
+#  set {
+#    name = "controller.ssl"
+#    value = true
+#  }
+#
+#  set {
+#    name = "controller.accountName"
+#    value = var.appd_account_name
+#  }
+#
+#  set {
+#    name = "controller.globalAccountName"
+#    value = var.appd_account_name
+#  }
+#
+#  set {
+#    name = "analytics.eventEndpoint"
+#    value = "https://analytics.api.appdynamics.com"
+#  }
+#
+#  set {
+#    name = "agent.netviz"
+#    value = true
+#  }
+#
+#  set {
+#    name = "openshift.scc"
+#    value = false
+#  }
+#
+#  depends_on = [helm_release.metrics-server]
+# }
 
 # Prometheus included as part of SMM..
 
