@@ -149,11 +149,11 @@ resource "helm_release" "iwo-collector" {
    value  = "latest"
  }
 
- set {
-   ### Controllabe?
-   name  = "annotations.kubeturbo.io/controllable"
-   value = "true"
- }
+ # set {
+ #   ### Controllablee?
+ #   name  = "annotations.kubeturbo.io/controllable"
+ #   value = "true"
+ # }
 
  set {
    name  = "iwoServerVersion"
@@ -169,6 +169,12 @@ resource "helm_release" "iwo-collector" {
    name  = "targetName"
    value = var.iwo_cluster_name
  }
+
+ values = [<<EOF
+   annotations:
+     kubeturbo.io/controllable: "true"
+EOF
+ ]
 }
 
 ## Add Tea Store Release  ##
