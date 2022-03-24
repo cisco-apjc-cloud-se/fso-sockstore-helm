@@ -141,6 +141,18 @@ resource "helm_release" "iwo-collector" {
  chart       = var.iwo_chart_url
 
  set {
+   ## Get latest DC image
+   name   = "connectorImage.tag"
+   value  = "latest"
+ }
+
+ set {
+   ### Controllabe?
+   name  = "annotations.kubeturbo.io/controllable"
+   value = "true"
+ }
+
+ set {
    name  = "iwoServerVersion"
    value = var.iwo_server_version
  }

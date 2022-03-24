@@ -9,5 +9,5 @@ teastore_chart_url = "https://cisco-apjc-cloud-se.github.io/helm-fso-teastore/fs
 ### Intersight Workload Optimizer Details ###
 iwo_cluster_name = "iks-fso-teastore"
 # iwo_chart_url = "" # Set in Workspace Variables
-iwo_server_version = "8.3"
-iwo_collector_image_version = "8.3.1"
+iwo_server_version = "8.5"
+iwo_collector_image_version = "latest" # "8.3.1"
