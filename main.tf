@@ -146,7 +146,7 @@ resource "helm_release" "iwo-collector" {
  set {
    ## Get latest DC image
    name   = "connectorImage.tag"
-   value  = "latest"
+   value  = var.dc_image_version
  }
 
  # set {

@@ -37,6 +37,10 @@ variable "iwo_collector_image_version" {
   type = string
 }
 
+variable "dc_image_version" {
+  type = string
+}
+
 ## Secure Cloud Analytics ##
 variable "sca_chart_url" {
   type = string
