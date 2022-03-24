@@ -100,6 +100,9 @@ resource "kubernetes_namespace" "teastore" {
       ## SMM Sidecard Proxy Auto Injection ##
       "istio.io/rev" = "cp-v111x.istio-system"
 
+      ## SecureCN
+      "SecureApplication-protected" = "full"
+
     }
     name = "teastore"
   }
